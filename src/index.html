@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .spinner {
+                color: red;
+                animation: loader 5s infinite linear;
+                transform: translateZ(0);
+                position: relative;
+                width: 1em;
+                height: 1em;
+                font-size: 40pt;
+            }
+
+            @keyframes loader {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+        <script>
+            function pause() {
+                const el = document.querySelector(".spinner:nth-child(1)");
+                el.style.setProperty("animation-play-state", "paused");
+            }
+
+            function resume() {
+                const el = document.querySelector(".spinner:nth-child(1)");
+                el.style.setProperty("animation-play-state", "running");
+            }
+        </script>
+
+    </head>
+    <body>
+        <div class="spinner">F</div>
+        <div class="spinner">F</div>
+        <div class="spinner">F</div>
+        <Button onclick="pause()">Pause</Button>
+        <Button onclick="resume()">Resume</Button>
+    </body>
+</html
