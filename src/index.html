@@ -2,14 +2,17 @@
 <html>
     <head>
         <style>
-            .spinner {
+            div {
                 color: red;
-                animation: loader 5s infinite linear;
                 transform: translateZ(0);
                 position: relative;
                 width: 1em;
                 height: 1em;
                 font-size: 40pt;
+            }
+
+            .spinner {
+                animation: loader 5s infinite linear;
             }
 
             @keyframes loader {
@@ -23,23 +26,86 @@
         </style>
 
         <script>
+            function syncopate(animationName) {
+                const elements = new Set();
+                let eventTime;
+
+                window.addEventListener("animationstart", event => {
+                    elements.add(event.target);
+                });
+
+                window.addEventListener("animationiteration", event => {
+                    if (event.animationName === animationName) {
+                        elements.add(event.target);
+
+                        requestAnimationFrame(frameTime => {
+                            if (frameTime !== eventTime) {
+                                restart(elements);
+                            }
+
+                            eventTime = frameTime;
+                        });
+                    }
+                }, true);
+
+                return {
+                    add(el) {
+
+                    }
+                }
+
+                function restart(elements) {
+                    elements.forEach(el => {
+                        el.style.setProperty("animation", "none");
+                    });
+
+                    setTimeout(() => {
+                        elements.forEach(el => {
+                            el.style.removeProperty("animation");
+                        });
+                    }, 10);
+                }
+            }
+
+            syncopate("loader");
+
+            function onLoad() {
+
+            }
+
+            function start() {
+                const el = document.querySelector("#four");
+                el.className = "spinner";
+            }
+
             function pause() {
-                const el = document.querySelector(".spinner:nth-child(1)");
+                const el = document.querySelector("#one");
                 el.style.setProperty("animation-play-state", "paused");
             }
 
             function resume() {
-                const el = document.querySelector(".spinner:nth-child(1)");
+                const el = document.querySelector("#one");
                 el.style.setProperty("animation-play-state", "running");
+            }
+
+            function restart() {
+                const el = document.querySelector("#three");
+                el.className = "";
+                setTimeout(() => {
+                    el.className = "spinner";
+                }, 10);
             }
         </script>
 
     </head>
-    <body>
-        <div class="spinner">F</div>
-        <div class="spinner">F</div>
-        <div class="spinner">F</div>
+    <body onload="onLoad()">
+        <div id="one" class="spinner">F</div>
+        <div id="two" class="spinner">F</div>
+        <div id="three" class="spinner">F</div>
+        <div id="four">F</div>
         <Button onclick="pause()">Pause</Button>
         <Button onclick="resume()">Resume</Button>
+        <Button onclick="restart()">Restart</Button>
+        <Button onclick="start()">Start</Button>
     </body>
 </html
