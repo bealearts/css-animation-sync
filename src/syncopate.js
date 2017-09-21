@@ -1,3 +1,4 @@
+
 export default function syncopate(animationName) {
     const elements = new Set();
     let eventTime;
@@ -6,7 +7,7 @@ export default function syncopate(animationName) {
         if (event.animationName === animationName) {
             elements.add(event.target);
         }
-    });
+    }, true);
 
     window.addEventListener('animationiteration', event => {
         if (event.animationName === animationName) {
@@ -46,6 +47,7 @@ export default function syncopate(animationName) {
         }
     };
 }
+
 
 function restart(elements) {
     elements.forEach(el => {
