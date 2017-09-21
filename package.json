@@ -1,0 +1,37 @@
+{
+  "name": "syncopate",
+  "version": "0.0.0",
+  "description": "Syncronise and control CSS Animations",
+  "main": "dist/syncopate.js",
+  "peerDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.0.2",
+    "chai-as-promised": "^7.0.0",
+    "eslint": "^4.0.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.3.0",
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "build": "babel src -d dist",
+    "lint": "eslint src test",
+    "test": "npm run build && npm run lint && mocha test --compilers js:babel-core/register",
+    "start": ""
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bealearts/syncopate.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "David Beale",
+    "url": "http://bealearts.co.uk/"
+  },
+  "dependencies": {}
+}
