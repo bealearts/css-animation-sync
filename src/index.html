@@ -25,47 +25,9 @@
             }
         </style>
 
+        <script src="./syncopate.js" ></script>
+
         <script>
-            function syncopate(animationName) {
-                const elements = new Set();
-                let eventTime;
-
-                window.addEventListener("animationstart", event => {
-                    elements.add(event.target);
-                });
-
-                window.addEventListener("animationiteration", event => {
-                    if (event.animationName === animationName) {
-                        elements.add(event.target);
-
-                        requestAnimationFrame(frameTime => {
-                            if (frameTime !== eventTime) {
-                                restart(elements);
-                            }
-
-                            eventTime = frameTime;
-                        });
-                    }
-                }, true);
-
-                return {
-                    add(el) {
-
-                    }
-                }
-
-                function restart(elements) {
-                    elements.forEach(el => {
-                        el.style.setProperty("animation", "none");
-                    });
-
-                    setTimeout(() => {
-                        elements.forEach(el => {
-                            el.style.removeProperty("animation");
-                        });
-                    }, 10);
-                }
-            }
 
             syncopate("loader");
 
