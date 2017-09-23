@@ -1,5 +1,5 @@
 
-export default function syncopate(animationName) {
+export default function sync(animationName) {
     const elements = new Set();
     let eventTime;
 
