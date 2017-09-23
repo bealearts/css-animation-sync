@@ -69,26 +69,15 @@
             }
 
             function start() {
-                const el = document.querySelector("#four");
-                el.className = "spinner";
+                animation.start();
             }
 
             function pause() {
-                const el = document.querySelector("#one");
-                el.style.setProperty("animation-play-state", "paused");
+                animation.pause();
             }
 
-            function resume() {
-                const el = document.querySelector("#one");
-                el.style.setProperty("animation-play-state", "running");
-            }
-
-            function restart() {
-                const el = document.querySelector("#three");
-                el.className = "";
-                setTimeout(() => {
-                    el.className = "spinner";
-                }, 10);
+            function stop() {
+                animation.stop();
             }
 
         </script>
@@ -123,9 +112,8 @@
         </label></br>
 
         <Button class="btn btn-primary" onclick="pause()">Pause</Button>
-        <Button class="btn btn-primary" onclick="resume()">Resume</Button>
-        <Button class="btn btn-primary" onclick="restart()">Restart</Button>
-        <Button class="btn btn-primary" onclick="start()">Start</Button>
+        <Button class="btn btn-primary" onclick="stop()">Stop</Button>
+        <Button class="btn btn-primary" onclick="start()">Start / Resume</Button>
       </div>
     </body>
 </html
