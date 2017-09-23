@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>css-animation-sync Example</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <style>
@@ -40,15 +41,31 @@
 
         <script>
 
-            sync("spinner");
+            let animation;
+
+            function enableSync(enable) {
+                if (enable) {
+                    animation = sync("spinner");
+                } else if (animation) {
+                    animation.free();
+                }
+
+                enableButtons(enable);
+            }
+
+            function enableButtons(enable) {
+                document.querySelectorAll('Button').forEach(button => button.disabled = !enable);
+            }
 
             function onLoad() {
-              ['#two', '#three', '#four'].forEach((name, index) => {
-                setTimeout(() => {
-                  const el = document.querySelector(name);
-                  el.className += " spinner";
-                }, 700 * (index + 1));
-              })
+                enableButtons(false);
+
+                ['#two', '#three', '#four'].forEach((name, index) => {
+                    setTimeout(() => {
+                        const el = document.querySelector(name);
+                        el.className += " spinner";
+                    }, 700 * (index + 1));
+                })
             }
 
             function start() {
@@ -73,12 +90,13 @@
                     el.className = "spinner";
                 }, 10);
             }
+
         </script>
 
     </head>
     <body onload="onLoad()">
       <div class="container">
-        <h1>Example</h1>
+        <h1>css-animation-sync Example</h1>
         <table class="table table-striped table-bordered" style="width: 300px">
           <tbody>
             <tr>
@@ -100,11 +118,14 @@
           </tbody>
         </table>
 
+        <label>
+            <input type="checkbox" onclick="enableSync(this.checked)" /> Enable Sync
+        </label></br>
 
-        <Button onclick="pause()">Pause</Button>
-        <Button onclick="resume()">Resume</Button>
-        <Button onclick="restart()">Restart</Button>
-        <Button onclick="start()">Start</Button>
+        <Button class="btn btn-primary" onclick="pause()">Pause</Button>
+        <Button class="btn btn-primary" onclick="resume()">Resume</Button>
+        <Button class="btn btn-primary" onclick="restart()">Restart</Button>
+        <Button class="btn btn-primary" onclick="start()">Start</Button>
       </div>
     </body>
 </html
