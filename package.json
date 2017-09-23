@@ -1,6 +1,6 @@
 {
   "name": "css-animation-sync",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Synchronise and control CSS Animations",
   "main": "dist/sync.js",
   "peerDependencies": {},
@@ -34,6 +34,5 @@
     "name": "David Beale",
     "url": "http://bealearts.co.uk/"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
