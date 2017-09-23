@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
         <style>
             div {
-                color: red;
                 transform: translateZ(0);
                 position: relative;
-                width: 1em;
-                height: 1em;
-                font-size: 40pt;
+                xfont-size: 40pt;
             }
 
             .spinner {
-                animation: loader 5s infinite linear;
+                animation: spinner 1s infinite linear;
             }
 
-            @keyframes loader {
+            @keyframes spinner {
                 0% {
                     transform: rotate(0deg);
                 }
@@ -29,10 +28,15 @@
 
         <script>
 
-            syncopate("loader");
+            sync("spinner");
 
             function onLoad() {
-
+              ['#two', '#three', '#four'].forEach((name, index) => {
+                setTimeout(() => {
+                  const el = document.querySelector(name);
+                  el.className += " spinner";
+                }, 700 * (index + 1));
+              })
             }
 
             function start() {
@@ -61,13 +65,34 @@
 
     </head>
     <body onload="onLoad()">
-        <div id="one" class="spinner">F</div>
-        <div id="two" class="spinner">F</div>
-        <div id="three" class="spinner">F</div>
-        <div id="four">F</div>
+      <div class="container">
+        <table class="table table-striped table-bordered" style="width: 200px">
+          <caption>Tasks</caption>
+          <tbody>
+            <tr>
+              <td>Starting...</td>
+              <td><div id="one" class="glyphicon glyphicon-refresh spinner"></div></td>
+            </tr>
+            <tr>
+              <td>Loading...</td>
+              <td><div id="two" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+            <tr>
+              <td>Starting again...</td>
+              <td><div id="three" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+            <tr>
+              <td>Something else...</td>
+              <td><div id="four" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+
         <Button onclick="pause()">Pause</Button>
         <Button onclick="resume()">Resume</Button>
         <Button onclick="restart()">Restart</Button>
         <Button onclick="start()">Start</Button>
+      </div>
     </body>
 </html

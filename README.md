@@ -7,13 +7,16 @@ Synchronise and control CSS Animations
 
 When DOM elements styled with the same CCS Animation are added to the document at different times, the animations are out of synchronisation.
 
-
+|Problem|Solution|
+|-------|--------|
+|Elements added at different times are out of sync|Adding `sync('spinner');`|
+|![Before](./docs/before.gif)|![After](./docs/after.gif)|
 
 # Usage
 ```js
 import sync from 'css-animation-sync';
 
-sync('loader');
+sync('spinner');
 ```
 
 # Install
