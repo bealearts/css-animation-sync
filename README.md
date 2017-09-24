@@ -12,7 +12,7 @@ When DOM elements styled with the same CCS Animation are added to the document a
 |Elements added at different times are out of sync|Adding `sync('spinner');`|
 |![Before](./docs/before.gif)|![After](./docs/after.gif)|
 
-Interactive [Example](https://gitcdn.link/repo/bealearts/css-animation-sync/master/example/index.html)
+Interactive [Example](https://gitcdn.link/repo/bealearts/css-animation-sync/HEAD/example/index.html)
 
 # Usage
 ```js
