@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 6.9.2
+deploy:
+  provider: npm
+  email: david.beale@bealearts.co.uk
+  api_key:
+    secure: ZpGM7i0uivVNHfUhgiewNvtPnYRdyFxllR65OUX6TCSZl3RTCvUoUxn5UVOUNn6WY+E92jb6d5P25NEVBbp9LK3Q5n19P7cWM55/uKmHRU0gufwDP3ldaNNfSWFCBWSBJz0lgBgb7R0x4tXEXhOXDxyzdaVSEIrqpJjKdpsq6/dloXBWZ7oDBj+sA4Ia4ZzwHLfpkJgGNZrhVTBNE10XAPLAx4rGlnnoUFtv9uin4IozDd2OvFz15wghy5k+srvCJbao2fVlZY+Yx9dsUV9/czUZfpH64TzTYBo7eCzq0U5qzRlW+BAg40Ww5kY4TuIr+A6n7lxQrCDwv57QcmpSiUMf+xlpfnLMR/PuX+n82rWguYjuFyPHYkTHlpr4e8v30sbj3lXZJt4OAwkKJcOwysx2JNfXyQvdNf9eYhp1ZLjdBIPueVdut6G9KvGgKI00HM7vli50qeRwoEwOi1gJUKcWWtPrvMb60WUs5eTJ8fn1ATWEVH4ELFfw0hDiwJIj57WZx4QGhfzDl237K43MtyxHzpYWYvFSjFPdoGPh7Ras3l2BUBxI+rfGiTNW3X3s2ROb72p8ferMHVncG5bHT0qg4s/fQtbIw8NgIJaKT1VZs18CUnVPSCzjTzo/xtvO1eTp7InmxAdrYzhnHFsO6fs1cdtRcvye3VS2e6apiQE=
+  on:
+    all_branches: true
+    tags: true
+    repo: bealearts/ccs-animation-sync
