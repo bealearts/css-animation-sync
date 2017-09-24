@@ -3,13 +3,13 @@ export default function sync(animationName) {
     const elements = new Set();
     let eventTime;
 
-    window.addEventListener('animationstart', event => {
+    function animationStart(event) {
         if (event.animationName === animationName) {
             elements.add(event.target);
         }
-    }, true);
+    }
 
-    window.addEventListener('animationiteration', event => {
+    function animationIteration(event) {
         if (event.animationName === animationName) {
             elements.add(event.target);
 
@@ -21,11 +21,20 @@ export default function sync(animationName) {
                 eventTime = frameTime;
             });
         }
-    }, true);
+    }
+
+
+    window.addEventListener('animationstart', animationStart, true);
+    window.addEventListener('animationiteration', animationIteration, true);
+
 
     return {
         free() {
+            window.removeEventListener('animationstart', animationStart);
+            window.removeEventListener('animationiteration', animationIteration);
 
+            this.start();
+            elements.clear();
         },
 
         start() {
