@@ -32,7 +32,8 @@ npm install css-animation-sync --save
 
     * `animationName` Name of the CSS animation to sync
 
-    Options
+    Options;
+    * `graceful`: `true` - Increase the speed of the first iteration of an elements animation, to give a smooth initial synchronisation
 
 
     Returns an animation instance (see below)
@@ -40,6 +41,10 @@ npm install css-animation-sync --save
 * `animation.free()` - Stops synchronisation of DOM elements using the animation
 
 * `animation.pause()` - Pause the animation of DOM elements using the animation
+
+* `animation.stop()` - Stop the animation of DOM elements using the animation
+
+* `animation.start()` - Start/Resume the animation of DOM elements using the animation
 
 
 

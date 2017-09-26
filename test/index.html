@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>css-animation-sync Example</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <style>
+            body {
+                background-color: #fdf6e3;
+            }
+
+            .table-striped>tbody>tr:nth-of-type(even) {
+                background-color: white;
+            }
+
+            .table-striped>tbody>tr:nth-of-type(odd) {
+                background-color: #EEE;
+            }
+
+            div {
+                transform: translateZ(0);
+                position: relative;
+                xfont-size: 40pt;
+            }
+
+            .spinner {
+                animation: spinner 10s infinite linear;
+            }
+
+            @keyframes spinner {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+        <script src="../dist/sync.js" ></script>
+
+        <script>
+
+            let animation;
+
+            function enableSync(enable) {
+                if (enable) {
+                    animation = sync("spinner");
+                } else if (animation) {
+                    animation.free();
+                }
+
+                enableButtons(enable);
+            }
+
+            function enableButtons(enable) {
+                document.querySelectorAll('Button').forEach(button => button.disabled = !enable);
+            }
+
+            function onLoad() {
+                enableButtons(false);
+
+                ['#two', '#three', '#four'].forEach((name, index) => {
+                    setTimeout(() => {
+                        const el = document.querySelector(name);
+                        el.className += " spinner";
+                    }, 700 * (index + 1));
+                })
+            }
+
+            function start() {
+                animation.start();
+            }
+
+            function pause() {
+                animation.pause();
+            }
+
+            function stop() {
+                animation.stop();
+            }
+
+        </script>
+
+    </head>
+    <body onload="onLoad()">
+      <div class="container">
+        <h1>css-animation-sync Example</h1>
+        <table class="table table-striped table-bordered" style="width: 300px">
+          <tbody>
+            <tr>
+              <td>Starting...</td>
+              <td><div id="one" class="glyphicon glyphicon-refresh spinner"></div></td>
+            </tr>
+            <tr>
+              <td>Loading...</td>
+              <td><div id="two" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+            <tr>
+              <td>Starting again...</td>
+              <td><div id="three" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+            <tr>
+              <td>Something else...</td>
+              <td><div id="four" class="glyphicon glyphicon-refresh"></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <label>
+            <input type="checkbox" onclick="enableSync(this.checked)" /> Enable Sync
+        </label></br>
+
+        <Button class="btn btn-primary" onclick="pause()">Pause</Button>
+        <Button class="btn btn-primary" onclick="stop()">Stop</Button>
+        <Button class="btn btn-primary" onclick="start()">Start / Resume</Button>
+      </div>
+    </body>
+</html

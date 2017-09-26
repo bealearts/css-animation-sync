@@ -1,11 +1,28 @@
 
-export default function sync(animationName) {
+const defaultOptions = {
+    graceful: true
+};
+
+export default function sync(animationName, options = {}) {
+    const opts = {
+        ...defaultOptions,
+        ...options
+    };
+
     const elements = new Set();
     let eventTime;
+    let lastInterationTS = now();
+    let interationDuration = 0;
 
     function animationStart(event) {
         if (event.animationName === animationName) {
-            elements.add(event.target);
+            const el = event.target;
+
+            if (opts.graceful && !elements.has(el) && interationDuration !== 0) {
+                gracefulStart(el, interationDuration, lastInterationTS);
+            }
+
+            elements.add(el);
         }
     }
 
@@ -15,6 +32,8 @@ export default function sync(animationName) {
 
             requestAnimationFrame(frameTime => {
                 if (frameTime !== eventTime) {
+                    interationDuration = now() - lastInterationTS;
+                    lastInterationTS = now();
                     restart(elements);
                 }
 
@@ -39,19 +58,25 @@ export default function sync(animationName) {
 
         start() {
             elements.forEach(el => {
-                el.style.removeProperty('animation');
+                if (validate(elements, el)) {
+                    el.style.removeProperty('animation');
+                }
             });
         },
 
         stop() {
             elements.forEach(el => {
-                el.style.setProperty('animation', 'none');
+                if (validate(elements, el)) {
+                    el.style.setProperty('animation', 'none');
+                }
             });
         },
 
         pause() {
             elements.forEach(el => {
-                el.style.setProperty('animation-play-state', 'paused');
+                if (validate(elements, el)) {
+                    el.style.setProperty('animation-play-state', 'paused');
+                }
             });
         }
     };
@@ -61,15 +86,40 @@ export default function sync(animationName) {
 function restart(elements) {
     elements.forEach(el => {
         if (window.getComputedStyle(el).animationPlayState !== 'paused') {
-            el.style.setProperty('animation', 'none');
+            if (validate(elements, el)) {
+                el.style.setProperty('animation', 'none');
+            }
         }
     });
 
     requestAnimationFrame(() => {
         elements.forEach(el => {
             if (window.getComputedStyle(el).animationPlayState !== 'paused') {
-                el.style.removeProperty('animation');
+                if (validate(elements, el)) {
+                    el.style.removeProperty('animation');
+                }
             }
         });
     });
+}
+
+
+function gracefulStart(el, interationDuration, lastInterationTS) {
+    const remaining = interationDuration - (now() - lastInterationTS);
+    console.log(interationDuration, remaining);
+    el.style.setProperty('animation-duration', remaining);
+}
+
+
+function now() {
+    return (new Date()).getTime();
+}
+
+
+function validate(elements, el) {
+    const isValid = document.body.contains(el);
+    if (!isValid) {
+        elements.delete(el);
+    }
+    return isValid;
 }

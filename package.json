@@ -21,7 +21,8 @@
   "scripts": {
     "build": "babel src -d dist",
     "lint": "eslint src test",
-    "test": "npm run build && npm run lint && mocha test --compilers js:babel-core/register",
+    "test:unit": "mocha --require test/setup.js --recursive test/ --compilers js:babel-core/register",
+    "test": "npm run build && npm run lint && npm run test:unit",
     "start": ""
   },
   "keywords": [],
@@ -34,5 +35,7 @@
     "name": "David Beale",
     "url": "http://bealearts.co.uk/"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jsdom": "^11.2.0"
+  }
 }
