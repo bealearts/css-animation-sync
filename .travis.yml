@@ -9,4 +9,4 @@ deploy:
   on:
     all_branches: true
     tags: true
-    repo: bealearts/ccs-animation-sync
+    repo: bealearts/css-animation-sync
