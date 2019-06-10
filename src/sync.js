@@ -106,7 +106,6 @@ function restart(elements) {
 
 function gracefulStart(el, interationDuration, lastInterationTS) {
     const remaining = interationDuration - (now() - lastInterationTS);
-    console.log(interationDuration, remaining);
     el.style.setProperty('animation-duration', remaining);
 }
 
