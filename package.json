@@ -6,17 +6,17 @@
   "peerDependencies": {},
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^7.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "chai": "^4.0.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.0.0",
-    "eslint": "^4.0.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.3.0",
-    "mocha": "^3.4.2"
+    "eslint-plugin-import": "^2.17.3",
+    "mocha": "^3.5.3"
   },
   "scripts": {
     "build": "babel src -d dist",
@@ -36,7 +36,7 @@
     "url": "http://bealearts.co.uk/"
   },
   "dependencies": {
-    "jsdom": "^11.2.0",
-    "sinon": "^4.0.0"
+    "jsdom": "^11.12.0",
+    "sinon": "^4.5.0"
   }
 }
