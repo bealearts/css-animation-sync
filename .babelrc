@@ -1,11 +1,13 @@
 {
-    "presets": [
-        "es2015"
-    ],
-    "plugins": [
-        "transform-object-rest-spread",
-        "add-module-exports",
-        "transform-es2015-modules-umd"
-
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["ie>=11"]
+        }
+      }
     ]
+  ],
+  "plugins": []
 }
