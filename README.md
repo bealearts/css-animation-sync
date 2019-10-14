@@ -28,12 +28,9 @@ npm install css-animation-sync --save
 
 # API
 
-* `const animation = new sync(animationName [, options])` - Synchronises all DOM elements using a CSS animation
+* `const animation = new sync(animationName)` - Synchronises all DOM elements using a CSS animation
 
     * `animationName` Name of the CSS animation to sync
-
-    Options;
-    * `graceful`: `true` - Increase the speed of the first iteration of an elements animation, to give a smooth initial synchronisation
 
 
     Returns an animation instance (see below)

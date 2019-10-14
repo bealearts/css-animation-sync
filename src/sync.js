@@ -1,26 +1,15 @@
 
-const defaultOptions = {
-    graceful: true
-};
-
-export default function sync(animationName, options = {}) {
-    const opts = {
-        ...defaultOptions,
-        ...options
-    };
-
+export default function sync(animationName) {
     const elements = new Set();
     let eventTime;
     let lastInterationTS = now();
-    let interationDuration = 0;
 
     function animationStart(event) {
         if (event.animationName === animationName) {
             const el = event.target;
 
-            if (opts.graceful && !elements.has(el) && interationDuration !== 0) {
-                gracefulStart(el, interationDuration, lastInterationTS);
-            }
+            const passed = now() - lastInterationTS;
+            el.style.setProperty('animation-delay', `${-passed}ms`);
 
             elements.add(el);
         }
@@ -32,7 +21,6 @@ export default function sync(animationName, options = {}) {
 
             requestAnimationFrame(frameTime => {
                 if (frameTime !== eventTime) {
-                    interationDuration = now() - lastInterationTS;
                     lastInterationTS = now();
                     restart(elements);
                 }
@@ -101,12 +89,6 @@ function restart(elements) {
             }
         });
     });
-}
-
-
-function gracefulStart(el, interationDuration, lastInterationTS) {
-    const remaining = interationDuration - (now() - lastInterationTS);
-    el.style.setProperty('animation-duration', remaining);
 }
 
 
