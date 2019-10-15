@@ -5,25 +5,27 @@
   "main": "dist/sync.js",
   "peerDependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "bootstrap-css-only": "^3.3.7",
     "chai": "^4.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "jsdom": "^15.2.0",
     "mocha": "^3.5.3",
+    "parcel-bundler": "^1.12.4",
     "sinon": "^7.5.0"
   },
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "parcel build ./src/sync.js --out-dir ./dist --global sync",
     "lint": "eslint src test",
     "test:unit": "mocha --require test/setup.js --recursive test/ --compilers js:@babel/register",
-    "test": "npm run build && npm run lint && npm run test:unit",
-    "start": ""
+    "test": "npm run lint && npm run lint && npm run test:unit",
+    "start": "parcel -p 3000 watch ./example/index.html --global sync"
   },
   "keywords": [
     "css",
