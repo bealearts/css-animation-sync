@@ -21,6 +21,7 @@ coverage
 build/Release
 tmp
 dist
+example-dist
 .cache
 
 # Dependency directory

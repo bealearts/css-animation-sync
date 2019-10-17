@@ -27,7 +27,7 @@
     "lint": "eslint src test",
     "test:unit": "mocha --require test/setup.js --recursive test/ --compilers js:@babel/register",
     "test": "npm run build && npm run lint && npm run test:unit",
-    "start": "parcel -p 3000 watch ./example/index.html --global sync"
+    "start": "parcel -p 3000 watch ./example/index.html --out-dir ./example-dist"
   },
   "keywords": [
     "css",

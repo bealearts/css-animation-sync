@@ -1,5 +1,5 @@
 
-import sync from '..';
+import sync from '../src/sync';
 
 let animation;
 
