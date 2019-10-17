@@ -1,0 +1,30 @@
+body {
+    background-color: #fdf6e3;
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: white;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #EEE;
+}
+
+div {
+    transform: translateZ(0);
+    position: relative;
+    xfont-size: 40pt;
+}
+
+.spinner {
+    animation: spinner 1s infinite linear;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -5,6 +5,7 @@
   "main": "dist/sync.js",
   "peerDependencies": {},
   "devDependencies": {
+    "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
@@ -22,10 +23,10 @@
     "sinon": "^7.5.0"
   },
   "scripts": {
-    "build": "parcel build ./src/sync.js --out-dir ./dist --global sync",
+    "build": "babel src -d dist",
     "lint": "eslint src test",
     "test:unit": "mocha --require test/setup.js --recursive test/ --compilers js:@babel/register",
-    "test": "npm run lint && npm run lint && npm run test:unit",
+    "test": "npm run build && npm run lint && npm run test:unit",
     "start": "parcel -p 3000 watch ./example/index.html --global sync"
   },
   "keywords": [
@@ -43,5 +44,7 @@
     "name": "David Beale",
     "url": "http://bealearts.co.uk/"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1"
+  }
 }
