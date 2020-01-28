@@ -10,6 +10,10 @@
     "no-unused-vars": ["warn"],
     "no-prototype-builtins": ["off"],
     "no-plusplus": ["off"],
-    "arrow-parens": ["off"]
+    "arrow-parens": ["off"],
+    "import/extensions": ["error", "always", {
+      js: "never",
+      mjs: "never",
+    }],
   }
 }

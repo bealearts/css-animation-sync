@@ -1,5 +1,5 @@
 
-import sync from '../src/sync';
+import sync from '../src/sync.mjs';
 
 let animation;
 

@@ -2,10 +2,13 @@
 <html>
     <head>
         <title>css-animation-sync Example</title>
-        <link rel="stylesheet" href="../node_modules/bootstrap-css-only/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./style.css">
 
-        <script src="./main.js"></script>
+        <script type="module" src="./main.mjs"></script>
+        <script nomodule>
+          document.write('Although this library supports ES5 browsers, this example page only supports modern browsers which can use ES Modules.');
+        </script>
     </head>
     <body>
       <div class="container">

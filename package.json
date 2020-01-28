@@ -3,31 +3,14 @@
   "version": "0.1.0",
   "description": "Synchronise and control CSS Animations",
   "main": "dist/sync.js",
-  "peerDependencies": {},
-  "devDependencies": {
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/register": "^7.6.2",
-    "babel-eslint": "^10.0.3",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "bootstrap-css-only": "^3.3.7",
-    "canvas": "^2.6.0",
-    "chai": "^4.2.0",
-    "eslint": "^6.5.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
-    "jsdom": "^15.2.0",
-    "mocha": "^3.5.3",
-    "parcel-bundler": "^1.12.4",
-    "sinon": "^7.5.0"
-  },
+  "module": "src/sync.mjs",
   "scripts": {
-    "build": "babel src -d dist",
-    "lint": "eslint src test",
+    "build": "babel src/sync.mjs -o dist/sync.js",
+    "lint": "eslint src/**/*.mjs test/**/*.js",
     "test:unit": "mocha --require test/setup.js --recursive test/ --compilers js:@babel/register",
     "test": "npm run build && npm run lint && npm run test:unit",
-    "start": "parcel -p 3000 watch ./example/index.html --out-dir ./example-dist"
+    "xstart": "parcel -p 3000 watch ./example/index.html --out-dir ./example-dist",
+    "start": "serve -l 3000"
   },
   "keywords": [
     "css",
@@ -44,7 +27,23 @@
     "name": "David Beale",
     "url": "http://bealearts.co.uk/"
   },
-  "dependencies": {
-    "babel-plugin-transform-es2015-modules-umd": "^6.24.1"
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "bootstrap-css-only": "^3.3.7",
+    "canvas": "^2.6.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jsdom": "^15.2.0",
+    "mocha": "^3.5.3",
+    "serve": "^11.3.0",
+    "sinon": "^7.5.0"
   }
 }

@@ -50,3 +50,8 @@ npm install css-animation-sync --save
 npm install
 npm test
 ```
+
+# Dev
+```shell
+npm start
+```
