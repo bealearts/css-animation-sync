@@ -35,15 +35,14 @@
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
-    "bootstrap-css-only": "^3.3.7",
     "canvas": "^2.6.0",
     "chai": "^4.2.0",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "jsdom": "^15.2.0",
+    "jsdom": "^16.0.1",
     "mocha": "^3.5.3",
     "serve": "^11.3.0",
-    "sinon": "^7.5.0"
+    "sinon": "^8.1.1"
   }
 }
