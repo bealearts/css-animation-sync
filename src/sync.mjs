@@ -3,9 +3,9 @@ export default function sync(animationName) {
   const elements = new Set();
   let eventTime;
   let lastInterationTS = now();
-
+  const shouldSync = Array.isArray(animationName) ? (event) => animationName.indexOf(event.animationName) > -1 : event.animationName === animationName;
   function animationStart(event) {
-    if (event.animationName === animationName) {
+    if (shouldSync(event.animationName)) {
       const el = event.target;
 
       const passed = now() - lastInterationTS;
@@ -16,7 +16,7 @@ export default function sync(animationName) {
   }
 
   function animationIteration(event) {
-    if (event.animationName === animationName) {
+    if (shouldSync(event.animationName)) {
       elements.add(event.target);
 
       requestAnimationFrame(frameTime => {
