@@ -10,7 +10,7 @@ const { expect } = chai;
 describe('sync', () => {
   it('should return an animation obj', () => {
     const animation = sync('test');
-    
+
     expect(animation).to.have.property('free');
     expect(animation).to.have.property('pause');
     expect(animation).to.have.property('stop');
