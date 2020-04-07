@@ -3,28 +3,24 @@ export default function sync(animationName) {
   const elements = new Set();
   let eventTime;
   let lastInterationTS = now();
-
+  const shouldSync = Array.isArray(animationName) ? (event) => animationName.indexOf(event.animationName) > -1 : (event) => event.animationName === animationName;
   function animationStart(event) {
-    if (event.animationName === animationName) {
+    if (shouldSync(event)) {
       const el = event.target;
-
       const passed = now() - lastInterationTS;
       el.style.setProperty('animation-delay', `${-passed}ms`);
-
       elements.add(el);
     }
   }
 
   function animationIteration(event) {
-    if (event.animationName === animationName) {
+    if (shouldSync(event)) {
       elements.add(event.target);
-
       requestAnimationFrame(frameTime => {
         if (frameTime !== eventTime) {
           lastInterationTS = now();
           restart(elements);
         }
-
         eventTime = frameTime;
       });
     }
@@ -36,6 +32,10 @@ export default function sync(animationName) {
 
 
   return {
+    getElements() {
+      return elements;
+    },
+
     free() {
       window.removeEventListener('animationstart', animationStart);
       window.removeEventListener('animationiteration', animationIteration);

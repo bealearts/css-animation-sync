@@ -7,6 +7,9 @@ const jsdom = new JSDOM(`
     </head>
     <body>
         <div id="test"></div>
+        <div id="test-1"></div>
+        <div id="test-2"></div>
+
     </body>
 </html>
 `);
