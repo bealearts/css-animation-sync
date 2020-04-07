@@ -28,9 +28,10 @@ npm install css-animation-sync --save
 
 # API
 
-* `const animation = new sync(animationName)` - Synchronises all DOM elements using a CSS animation
+* `const animation = new sync(animationName || animationNames)` - Synchronises all DOM elements using a CSS animation or multipule CSS animations
 
     * `animationName` Name of the CSS animation to sync
+    * `animationNames` Array of CSS animations to sync (allows syncing multipule animations)
 
 
     Returns an animation instance (see below)

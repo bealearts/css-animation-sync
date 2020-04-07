@@ -3,7 +3,10 @@ export default function sync(animationName) {
   const elements = new Set();
   let eventTime;
   let lastInterationTS = now();
-  const shouldSync = Array.isArray(animationName) ? (event) => animationName.indexOf(event.animationName) > -1 : (event) => event.animationName === animationName;
+  const shouldSync = Array.isArray(animationName)
+    ? (event) => animationName.indexOf(event.animationName) > -1
+    : (event) => event.animationName === animationName;
+
   function animationStart(event) {
     if (shouldSync(event)) {
       const el = event.target;
