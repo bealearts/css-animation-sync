@@ -2,7 +2,7 @@
 export default function sync(animationName) {
   const elements = new Set();
   let eventTime;
-  let lastInterationTS = now();
+  let lastIterationTS = now();
   const shouldSync = Array.isArray(animationName)
     ? (event) => animationName.indexOf(event.animationName) > -1
     : (event) => event.animationName === animationName;
@@ -10,7 +10,7 @@ export default function sync(animationName) {
   function animationStart(event) {
     if (shouldSync(event)) {
       const el = event.target;
-      const passed = now() - lastInterationTS;
+      const passed = now() - lastIterationTS;
       el.style.setProperty('animation-delay', `${-passed}ms`);
       elements.add(el);
     }
@@ -21,7 +21,7 @@ export default function sync(animationName) {
       elements.add(event.target);
       requestAnimationFrame(frameTime => {
         if (frameTime !== eventTime) {
-          lastInterationTS = now();
+          lastIterationTS = now();
           restart(elements);
         }
         eventTime = frameTime;
