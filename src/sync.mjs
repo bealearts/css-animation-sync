@@ -75,21 +75,20 @@ export default function sync(animationName) {
 
 
 function restart(elements) {
+  const resetElements = [];
   elements.forEach(el => {
     if (window.getComputedStyle(el).animationPlayState !== 'paused') {
       if (validate(elements, el)) {
-        el.style.setProperty('animation', 'none');
+        const { animationName } = window.getComputedStyle(el);
+        el.style.setProperty('animation-name', `${animationName}__sync`);
+        resetElements.push(el);
       }
     }
   });
 
   requestAnimationFrame(() => {
-    elements.forEach(el => {
-      if (window.getComputedStyle(el).animationPlayState !== 'paused') {
-        if (validate(elements, el)) {
-          el.style.removeProperty('animation');
-        }
-      }
+    resetElements.forEach(el => {
+      el.style.removeProperty('animation-name');
     });
   });
 }

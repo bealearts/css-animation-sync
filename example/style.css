@@ -31,3 +31,18 @@ div {
         transform: rotate(360deg);
     }
 }
+
+.alert {
+  background: green;
+  animation: alert 1s infinite step-end;
+}
+
+@keyframes alert {
+    0% { background-color: #F00; }
+    50% { background-color: #D00; }
+}
+
+@keyframes alert__sync {
+    0% { background-color: #F00; }
+    50% { background-color: #D00; }
+}

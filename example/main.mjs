@@ -5,7 +5,7 @@ let animation;
 
 function enableSync(enable) {
   if (enable) {
-    animation = sync('spinner');
+    animation = sync(['spinner', 'alert']);
   } else if (animation) {
     animation.free();
   }
