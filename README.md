@@ -49,7 +49,7 @@ npm install css-animation-sync --save
 
 [Issue #14](https://github.com/bealearts/css-animation-sync/issues/14) Animation Flickering
 
-If your animation makes a noticeable change in style in the initial keyframe, you may notice a flickering when using this lib. In order to prevent this, declare your `@keyframe` a second time, with the name [your animation name]__sync e.g.
+If your animation makes a noticeable change in style in the initial keyframe, you may notice a flickering when using this lib. In order to prevent this, declare your `@keyframes` a second time, with the name [your animation name]__sync e.g.
 
 ```css
 @keyframes alert {
