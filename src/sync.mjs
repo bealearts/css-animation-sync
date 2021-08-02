@@ -1,71 +1,115 @@
 
-export default function sync(animationName) {
-  const elements = new Set();
-  let eventTime;
-  let lastIterationTS = now();
-  const shouldSync = Array.isArray(animationName)
-    ? (event) => animationName.indexOf(event.animationName) > -1
-    : (event) => event.animationName === animationName;
+const TIMER_RESOLUTION = 100; // 100ms is max browser timer resolution without high precision enabled
 
-  function animationStart(event) {
-    if (shouldSync(event)) {
-      const el = event.target;
-      const passed = now() - lastIterationTS;
-      el.style.setProperty('animation-delay', `${-passed}ms`);
-      elements.add(el);
+export default function sync(animationNameOrNames) {
+  const animationNames = new Set(
+    Array.isArray(animationNameOrNames) ? animationNameOrNames : [animationNameOrNames]
+  );
+  const elements = new Map();
+  let animationDuration;
+  let primaryElement;
+  let isPaused = false;
+
+  function shouldSync(event) {
+    return animationNames.has(event.animationName);
+  }
+
+  function validate(el) {
+    const isValid = document.body.contains(el);
+    if (!isValid) {
+      if (el === primaryElement) {
+        primaryElement = null;
+      }
+      elements.delete(el);
     }
+    return isValid;
+  }
+
+  function findPrimaryElement(timeStamp) {
+    const elementsByTimeStamp = Array.from(elements)
+      .sort((a, b) => b[1] - a[1]);
+
+    return {
+      element: elementsByTimeStamp[0][0],
+      timeStamp
+    };
   }
 
   function animationIteration(event) {
     if (shouldSync(event)) {
-      elements.add(event.target);
-      requestAnimationFrame(frameTime => {
-        if (frameTime !== eventTime) {
-          lastIterationTS = now();
-          restart(elements);
+      const { target: element, timeStamp } = event;
+      elements.set(element, timeStamp);
+
+      if (!animationDuration) {
+        animationDuration = cssToMs(window.getComputedStyle(element).animationDuration);
+      }
+
+      if (primaryElement) {
+        const diff = timeStamp - primaryElement.timeStamp;
+        if (element !== primaryElement.element && diff > (animationDuration - TIMER_RESOLUTION)) {
+          primaryElement = null;
+        } else {
+          validate(primaryElement.target);
         }
-        eventTime = frameTime;
-      });
+      }
+
+      if (!primaryElement) {
+        primaryElement = findPrimaryElement(timeStamp);
+      }
+
+      if (element === primaryElement.element) {
+        primaryElement.timeStamp = timeStamp;
+      } else {
+        const diff = timeStamp - primaryElement.timeStamp;
+        if (diff > TIMER_RESOLUTION) {
+          element.style.setProperty('animation-delay', `-${diff}ms`);
+        }
+      }
     }
   }
 
-
-  window.addEventListener('animationstart', animationStart, true);
   window.addEventListener('animationiteration', animationIteration, true);
 
 
   return {
     getElements() {
-      return elements;
+      return elements.keys();
     },
 
     free() {
-      window.removeEventListener('animationstart', animationStart);
-      window.removeEventListener('animationiteration', animationIteration);
+      window.removeEventListener('animationiteration', animationIteration, true);
 
       this.start();
       elements.clear();
+      primaryElement = null;
     },
 
     start() {
-      elements.forEach(el => {
-        if (validate(elements, el)) {
-          el.style.removeProperty('animation');
+      elements.forEach((ts, el) => {
+        if (validate(el)) {
+          if (isPaused) {
+            el.style.removeProperty('animation-play-state');
+          } else {
+            el.style.removeProperty('animation');
+          }
         }
       });
+      isPaused = false;
     },
 
     stop() {
-      elements.forEach(el => {
-        if (validate(elements, el)) {
+      isPaused = false;
+      elements.forEach((ts, el) => {
+        if (validate(el)) {
           el.style.setProperty('animation', 'none');
         }
       });
     },
 
     pause() {
-      elements.forEach(el => {
-        if (validate(elements, el)) {
+      isPaused = true;
+      elements.forEach((ts, el) => {
+        if (validate(el)) {
           el.style.setProperty('animation-play-state', 'paused');
         }
       });
@@ -73,36 +117,16 @@ export default function sync(animationName) {
   };
 }
 
+function cssToMs(time) {
+  const num = parseFloat(time, 10);
+  const unit = time.match(/m?s/)?.[0];
 
-function restart(elements) {
-  const resetElements = [];
-  elements.forEach(el => {
-    if (window.getComputedStyle(el).animationPlayState !== 'paused') {
-      if (validate(elements, el)) {
-        const { animationName } = window.getComputedStyle(el);
-        el.style.setProperty('animation-name', `${animationName}__sync`);
-        resetElements.push(el);
-      }
-    }
-  });
-
-  requestAnimationFrame(() => {
-    resetElements.forEach(el => {
-      el.style.removeProperty('animation-name');
-    });
-  });
-}
-
-
-function now() {
-  return (new Date()).getTime();
-}
-
-
-function validate(elements, el) {
-  const isValid = document.body.contains(el);
-  if (!isValid) {
-    elements.delete(el);
+  switch (unit) {
+    case 's':
+      return num * 1000;
+    case 'ms':
+      return num;
+    default:
+      return 0;
   }
-  return isValid;
 }
