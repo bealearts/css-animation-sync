@@ -28,7 +28,7 @@ npm install css-animation-sync --save
 
 # API
 
-* `const animation = new sync(animationName || animationNames)` - Synchronises all DOM elements using a CSS animation or multiple CSS animations
+* `const animation = new sync(animationName || animationNames)` - Synchronises all DOM elements using a CSS animation or multiple CSS animations. The animations duration needs to be the same for syncing to make sense.
 
     * `animationName` Name of the CSS animation to sync
     * `animationNames` Array of CSS animations to sync (allows syncing multiple animations)
@@ -43,25 +43,6 @@ npm install css-animation-sync --save
 * `animation.stop()` - Stop the animation of DOM elements using the animation
 
 * `animation.start()` - Start/Resume the animation of DOM elements using the animation
-
-
-# Know Issues
-
-[Issue #14](https://github.com/bealearts/css-animation-sync/issues/14) Animation Flickering
-
-If your animation makes a noticeable change in style in the initial keyframe, you may notice a flickering when using this lib. In order to prevent this, declare your `@keyframes` a second time, with the name [your animation name]__sync e.g.
-
-```css
-@keyframes alert {
-    0% { background-color: #F00; }
-    50% { background-color: #D00; }
-}
-
-@keyframes alert__sync {
-    0% { background-color: #F00; }
-    50% { background-color: #D00; }
-}
-```
 
 
 # Test
