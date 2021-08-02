@@ -1,5 +1,5 @@
-
-const TIMER_RESOLUTION = 100; // 100ms is max browser timer resolution without high precision enabled
+// 100ms is max browser timer resolution without high precision enabled
+const TIMER_RESOLUTION = 100;
 
 export default function sync(animationNameOrNames) {
   const animationNames = new Set(
@@ -73,7 +73,7 @@ export default function sync(animationNameOrNames) {
 
   return {
     getElements() {
-      return elements.keys();
+      return new Set(elements.keys());
     },
 
     free() {

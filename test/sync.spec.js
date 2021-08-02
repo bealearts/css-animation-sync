@@ -22,8 +22,8 @@ describe('sync', () => {
     const testDiv1 = document.getElementById('test-1');
     const testDiv2 = document.getElementById('test-2');
 
-    const animationEvent1 = Object.assign(new window.Event('animationstart', { bubbles: true }), { animationName: 'test1' });
-    const animationEvent2 = Object.assign(new window.Event('animationstart', { bubbles: true }), { animationName: 'test1' });
+    const animationEvent1 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test1' });
+    const animationEvent2 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test1' });
 
     testDiv1.dispatchEvent(animationEvent1);
     expect(animation.getElements().size).to.equal(1);
@@ -37,8 +37,8 @@ describe('sync', () => {
     const testDiv1 = document.getElementById('test-1');
     const testDiv2 = document.getElementById('test-2');
 
-    const animationEvent1 = Object.assign(new window.Event('animationstart', { bubbles: true }), { animationName: 'test1' });
-    const animationEvent2 = Object.assign(new window.Event('animationstart', { bubbles: true }), { animationName: 'test2' });
+    const animationEvent1 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test1' });
+    const animationEvent2 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test2' });
 
     testDiv1.dispatchEvent(animationEvent1);
     expect(animation.getElements().size).to.equal(1);
@@ -52,8 +52,7 @@ describe('sync', () => {
 
     sync('test');
 
-    expect(window.addEventListener.getCall(0).args[0]).to.equal('animationstart');
-    expect(window.addEventListener.getCall(1).args[0]).to.equal('animationiteration');
+    expect(window.addEventListener.getCall(0).args[0]).to.equal('animationiteration');
   });
 
 
@@ -63,7 +62,6 @@ describe('sync', () => {
     const animation = sync('test');
     animation.free();
 
-    expect(window.removeEventListener.getCall(0).args[0]).to.equal('animationstart');
-    expect(window.removeEventListener.getCall(1).args[0]).to.equal('animationiteration');
+    expect(window.removeEventListener.getCall(0).args[0]).to.equal('animationiteration');
   });
 });
