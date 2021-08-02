@@ -1,5 +1,5 @@
 body {
-    background-color: #fdf6e3;
+  background-color: #fdf6e3;
 }
 
 h1 {
@@ -7,29 +7,30 @@ h1 {
 }
 
 .table-striped>tbody>tr:nth-of-type(even) {
-    background-color: white;
+  background-color: white;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #EEE;
+  background-color: #EEE;
 }
 
 div {
-    transform: translateZ(0);
-    position: relative;
+  transform: translateZ(0);
+  position: relative;
 }
 
 .spinner {
-    animation: spinner 1s infinite linear;
+  animation: spinner 1s infinite linear;
 }
 
 @keyframes spinner {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .alert {
@@ -38,11 +39,11 @@ div {
 }
 
 @keyframes alert {
-    0% { background-color: #F00; }
-    50% { background-color: #D00; }
-}
+  0% {
+    background-color: #F00;
+  }
 
-@keyframes alert__sync {
-    0% { background-color: #F00; }
-    50% { background-color: #D00; }
+  50% {
+    background-color: #D00;
+  }
 }
