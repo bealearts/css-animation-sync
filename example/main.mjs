@@ -1,6 +1,5 @@
 
-// import sync from '../src/sync.mjs';
-import sync from 'https://unpkg.com/css-animation-sync@0.4.0-beta-1/dist/sync.js';
+import sync from '../src/sync.mjs';
 
 let animation;
 
