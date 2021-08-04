@@ -1,14 +1,12 @@
-// 100ms is max browser timer resolution without high precision enabled
-const TIMER_RESOLUTION = 100;
 
 export default function sync(animationNameOrNames) {
   const animationNames = new Set(
     Array.isArray(animationNameOrNames) ? animationNameOrNames : [animationNameOrNames]
   );
-  const elements = new Map();
+  const elements = new Set();
   let animationDuration;
-  let primaryElement;
   let isPaused = false;
+  let lastInterationTimestamp = 0;
 
   function shouldSync(event) {
     return animationNames.has(event.animationName);
@@ -17,75 +15,64 @@ export default function sync(animationNameOrNames) {
   function validate(el) {
     const isValid = document.body.contains(el);
     if (!isValid) {
-      if (el === primaryElement) {
-        primaryElement = null;
-      }
       elements.delete(el);
     }
     return isValid;
   }
 
-  function findPrimaryElement(timeStamp) {
-    const elementsByTimeStamp = Array.from(elements)
-      .sort((a, b) => b[1] - a[1]);
-
-    return {
-      element: elementsByTimeStamp[0][0],
-      timeStamp
-    };
+  function init() {
+    setTimeout(restart, animationDuration);
   }
+
+  function restart() {
+    this.stop();
+    setTimeout(this.start, 50);
+  }
+
+  function animationStart(event) {
+    if (shouldSync(event)) {
+      const { target: element, timeStamp } = event;
+      elements.add(element);
+
+      const diff = timeStamp - lastInterationTimestamp;
+      element.style.setProperty('animation-delay', `-${diff}ms`);
+    }
+  }
+
 
   function animationIteration(event) {
     if (shouldSync(event)) {
       const { target: element, timeStamp } = event;
-      elements.set(element, timeStamp);
+      elements.add(element);
+
+      lastInterationTimestamp = timeStamp;
 
       if (!animationDuration) {
         animationDuration = cssToMs(window.getComputedStyle(element).animationDuration);
-      }
-
-      if (primaryElement) {
-        const diff = timeStamp - primaryElement.timeStamp;
-        if (element !== primaryElement.element && diff > (animationDuration - TIMER_RESOLUTION)) {
-          primaryElement = null;
-        } else {
-          validate(primaryElement.target);
-        }
-      }
-
-      if (!primaryElement) {
-        primaryElement = findPrimaryElement(timeStamp);
-      }
-
-      if (element === primaryElement.element) {
-        primaryElement.timeStamp = timeStamp;
-      } else {
-        const diff = timeStamp - primaryElement.timeStamp;
-        if (diff > TIMER_RESOLUTION) {
-          element.style.setProperty('animation-delay', `-${diff}ms`);
-        }
+        init();
       }
     }
   }
 
   window.addEventListener('animationiteration', animationIteration, true);
+  window.addEventListener('animationstart', animationStart, true);
 
 
   return {
     getElements() {
-      return new Set(elements.keys());
+      return elements;
     },
 
     free() {
       window.removeEventListener('animationiteration', animationIteration, true);
+      window.removeEventListener('animationstart', animationStart, true);
 
       this.start();
       elements.clear();
-      primaryElement = null;
     },
 
     start() {
-      elements.forEach((ts, el) => {
+      elements.forEach((el) => {
         if (validate(el)) {
           if (isPaused) {
             el.style.removeProperty('animation-play-state');
@@ -99,7 +86,7 @@ export default function sync(animationNameOrNames) {
 
     stop() {
       isPaused = false;
-      elements.forEach((ts, el) => {
+      elements.forEach((el) => {
         if (validate(el)) {
           el.style.setProperty('animation', 'none');
         }
@@ -108,7 +95,7 @@ export default function sync(animationNameOrNames) {
 
     pause() {
       isPaused = true;
-      elements.forEach((ts, el) => {
+      elements.forEach((el) => {
         if (validate(el)) {
           el.style.setProperty('animation-play-state', 'paused');
         }
@@ -119,7 +106,11 @@ export default function sync(animationNameOrNames) {
 
 function cssToMs(time) {
   const num = parseFloat(time, 10);
-  const unit = time.match(/m?s/)?.[0];
+  let unit = time.match(/m?s/);
+
+  if (!unit) return 0;
+
+  [unit] = unit;
 
   switch (unit) {
     case 's':
