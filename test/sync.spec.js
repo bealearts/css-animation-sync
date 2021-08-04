@@ -23,13 +23,13 @@ describe('sync', () => {
     const testDiv2 = document.getElementById('test-2');
 
     const animationEvent1 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test1' });
-    const animationEvent2 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test1' });
+    const animationEvent2 = Object.assign(new window.Event('animationiteration', { bubbles: true }), { animationName: 'test2' });
 
     testDiv1.dispatchEvent(animationEvent1);
     expect(animation.getElements().size).to.equal(1);
 
     testDiv2.dispatchEvent(animationEvent2);
-    expect(animation.getElements().size).to.equal(2);
+    expect(animation.getElements().size).to.equal(1);
   });
 
   it('should sync animations with differnt names', () => {
@@ -53,6 +53,7 @@ describe('sync', () => {
     sync('test');
 
     expect(window.addEventListener.getCall(0).args[0]).to.equal('animationiteration');
+    expect(window.addEventListener.getCall(1).args[0]).to.equal('animationstart');
   });
 
 
@@ -63,5 +64,6 @@ describe('sync', () => {
     animation.free();
 
     expect(window.removeEventListener.getCall(0).args[0]).to.equal('animationiteration');
+    expect(window.removeEventListener.getCall(1).args[0]).to.equal('animationstart');
   });
 });
