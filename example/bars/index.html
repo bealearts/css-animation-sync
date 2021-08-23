@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Animated Bars</title>
+        <style>
+          @keyframes alert {
+            0% { width: 10%; }
+            50% { width: 100%; }
+          }
+
+          div {
+            width: 10%;
+            background: #f40000;
+            animation: alert 10s infinite linear;
+            margin-bottom: 1px;
+          }
+        </style>
+
+        <script type="module">
+          import sync from '../../src/sync.mjs';
+
+          sync('alert');
+
+          let i = 1;
+          function addAlert() {
+          setTimeout(function () {
+            let el = document.createElement('DIV');
+            el.innerHTML = 'Alarm ' + i;
+            el.id = i;
+            document.body.appendChild(el);
+            i++;
+            if (i < 30) {
+              addAlert();
+            }
+          }, 1377 + Math.random() * 100);
+          }
+          addAlert();
+        </script>
+
+        <script nomodule>
+          document.write('Although this library supports ES5 browsers, this example page only supports modern browsers which can use ES Modules.');
+        </script>
+    </head>
+    <body>
+      <div>Alarm</div>
+    </body>
+</html
