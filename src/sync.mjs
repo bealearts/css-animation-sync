@@ -6,7 +6,7 @@ export default function sync(animationNameOrNames) {
   const elements = new Set();
   let animationDuration;
   let isPaused = false;
-  let lastInterationTimestamp = 0;
+  let lastIterationTimestamp = 0;
 
   const api = {
     getElements() {
@@ -79,7 +79,7 @@ export default function sync(animationNameOrNames) {
       const { target: element, timeStamp } = event;
       elements.add(element);
 
-      const diff = timeStamp - lastInterationTimestamp;
+      const diff = timeStamp - lastIterationTimestamp;
       element.style.setProperty('animation-delay', `-${diff}ms`);
     }
   }
@@ -90,7 +90,7 @@ export default function sync(animationNameOrNames) {
       const { target: element, timeStamp } = event;
       elements.add(element);
 
-      lastInterationTimestamp = timeStamp;
+      lastIterationTimestamp = timeStamp;
 
       if (!animationDuration) {
         animationDuration = cssToMs(window.getComputedStyle(element).animationDuration);
