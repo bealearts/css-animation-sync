@@ -2,6 +2,7 @@
 
 Synchronise and control CSS Animations
 
+> NOTE: This library was created before the availability of the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) and this may now provide a better solution for you.
 
 # The Problem
 
